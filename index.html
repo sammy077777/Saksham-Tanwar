@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Saksham Tanwar | Analytics Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#050810;--bg-elevated:#0A0F18;--bg-card:#0D1320;--bg-card-hover:#111828;--border:#161E2E;--border-hover:#2A5A8C;--accent:#3B9DD9;--accent-bright:#5BB8F0;--accent-glow:rgba(59,157,217,0.12);--accent-glow-strong:rgba(59,157,217,0.25);--text:#E6EAF0;--text-secondary:#8A97AA;--text-dim:#4D5B6E;--tag-bg:#0F1A2A;--tag-text:#6DB3E0;--green:#4CD9A0;--green-bg:rgba(76,217,160,0.08);--green-border:rgba(76,217,160,0.2);--gradient-1:#3B9DD9;--gradient-2:#6E5BD9;--cursor-size:320px}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.cursor-glow{position:fixed;width:var(--cursor-size);height:var(--cursor-size);border-radius:50%;background:radial-gradient(circle,rgba(59,157,217,0.06) 0%,transparent 70%);pointer-events:none;z-index:1;transform:translate(-50%,-50%);will-change:left,top}
+.grain{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9998;opacity:0.025;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 clamp(20px,4vw,48px);transition:all 0.4s cubic-bezier(0.16,1,0.3,1)}
+nav.scrolled{background:rgba(5,8,16,0.92);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:1140px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;height:72px}
+.nav-logo{font-family:'Instrument Serif',serif;font-size:28px;color:var(--text);text-decoration:none;position:relative}
+.nav-logo::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1px;background:var(--accent);transition:width 0.3s}
+.nav-logo:hover::after{width:100%}
+.nav-links{display:flex;gap:36px;list-style:none}
+.nav-links a{font-size:13px;font-weight:500;color:var(--text-secondary);text-decoration:none;letter-spacing:1.2px;text-transform:uppercase;position:relative;transition:color 0.25s}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:50%;width:0;height:2px;background:var(--accent);transition:all 0.25s;transform:translateX(-50%);border-radius:1px}
+.nav-links a:hover{color:var(--accent)}.nav-links a:hover::after{width:100%}
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px;z-index:1001}
+.hamburger span{display:block;width:24px;height:2px;background:var(--text);border-radius:2px;transition:all 0.3s;transform-origin:center}
+.hamburger.active span:nth-child(1){transform:translateY(7px) rotate(45deg)}.hamburger.active span:nth-child(2){opacity:0}.hamburger.active span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mobile-menu{position:fixed;top:0;right:-100%;width:280px;height:100vh;background:var(--bg-elevated);border-left:1px solid var(--border);z-index:999;display:flex;flex-direction:column;padding:100px 40px 40px;gap:8px;transition:right 0.4s cubic-bezier(0.16,1,0.3,1)}
+.mobile-menu.open{right:0}
+.mobile-menu a{font-size:18px;font-weight:400;color:var(--text-secondary);text-decoration:none;padding:12px 0;border-bottom:1px solid var(--border);transition:all 0.2s}
+.mobile-menu a:hover{color:var(--accent);padding-left:8px}
+.mobile-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:998;opacity:0;pointer-events:none;transition:opacity 0.3s}
+.mobile-overlay.visible{opacity:1;pointer-events:all}
+.reveal{opacity:1;transform:translateY(0);transition:all 0.7s cubic-bezier(0.16,1,0.3,1)}
+.js-loaded .reveal{opacity:0;transform:translateY(40px)}
+.js-loaded .reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-delay-1{transition-delay:0.1s}.reveal-delay-2{transition-delay:0.2s}.reveal-delay-3{transition-delay:0.3s}.reveal-delay-4{transition-delay:0.4s}
+
+/* HERO */
+.hero{padding:clamp(130px,18vw,200px) clamp(20px,4vw,48px) clamp(80px,10vw,120px);max-width:1140px;margin:0 auto;position:relative}
+.hero-orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:0.15;animation:float 8s ease-in-out infinite;pointer-events:none}
+.hero-orb-1{width:400px;height:400px;background:var(--gradient-1);top:-100px;right:-100px}
+.hero-orb-2{width:300px;height:300px;background:var(--gradient-2);bottom:-50px;left:-80px}
+@keyframes float{0%,100%{transform:translate(0,0)}33%{transform:translate(15px,-20px)}66%{transform:translate(-10px,15px)}}
+
+.hero-content{display:flex;align-items:center;gap:48px}
+.hero-left{flex:1}
+.hero-photo{width:200px;height:200px;border-radius:50%;overflow:hidden;border:2px solid var(--border);flex-shrink:0;position:relative}
+.js-loaded .hero-photo{animation:fadeInRight 0.8s 0.3s cubic-bezier(0.16,1,0.3,1) both}
+.hero-photo::after{content:'';position:absolute;inset:0;border-radius:50%;box-shadow:0 0 40px var(--accent-glow)}
+.hero-photo img{width:100%;height:100%;object-fit:cover}
+@keyframes fadeInRight{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}
+
+.hero-status{display:inline-flex;align-items:center;gap:10px;background:var(--green-bg);border:1px solid var(--green-border);border-radius:100px;padding:8px 20px;margin-bottom:40px}
+.status-dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(0.85)}}
+.hero-status span{font-size:13px;font-weight:500;color:var(--green);letter-spacing:0.3px}
+.hero h1{font-family:'Instrument Serif',serif;font-size:clamp(44px,7vw,82px);font-weight:400;line-height:1.05;letter-spacing:-2px;margin-bottom:28px}
+.hero h1 .line{display:block;overflow:hidden}
+.hero h1 .line-inner{display:block}
+.js-loaded .hero h1 .line-inner{animation:slideUp 0.8s cubic-bezier(0.16,1,0.3,1) both}
+.js-loaded .hero h1 .line:nth-child(2) .line-inner{animation-delay:0.12s}
+@keyframes slideUp{from{transform:translateY(110%)}to{transform:translateY(0)}}
+.hero h1 em{font-style:italic;background:linear-gradient(135deg,var(--gradient-1),var(--gradient-2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:clamp(16px,2vw,19px);color:var(--text-secondary);max-width:560px;line-height:1.75;margin-bottom:40px;font-weight:300}
+.hero-ctas{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:56px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 28px;border-radius:10px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:500;text-decoration:none;transition:all 0.3s cubic-bezier(0.16,1,0.3,1);cursor:pointer;border:none;position:relative;overflow:hidden}
+.btn-primary{background:linear-gradient(135deg,var(--gradient-1),var(--gradient-2));color:#fff}
+.btn-primary::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.15),transparent);transition:left 0.5s}
+.btn-primary:hover::before{left:100%}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(59,157,217,0.35)}
+.btn-ghost{background:transparent;color:var(--text-secondary);border:1px solid var(--border)}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
+.hero-tools-strip{display:flex;gap:28px;padding-top:32px;border-top:1px solid var(--border);flex-wrap:wrap}
+.hero-tool-item{display:flex;align-items:center;gap:8px}
+.tool-dot{width:4px;height:4px;border-radius:50%;background:var(--accent)}
+.hero-tool-item span{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:400;color:var(--text-dim);letter-spacing:0.5px}
+
+/* SECTIONS */
+section{padding:clamp(60px,8vw,100px) clamp(20px,4vw,48px);max-width:1140px;margin:0 auto}
+.s-divider{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);max-width:1140px;margin:0 auto}
+.s-header{display:flex;align-items:center;gap:16px;margin-bottom:52px}
+.s-num{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--accent);border:1px solid var(--border);width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.s-header h2{font-family:'Instrument Serif',serif;font-size:clamp(30px,4vw,40px);font-weight:400;letter-spacing:-0.5px}
+
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:1fr 320px;gap:56px;align-items:start}
+.about-prose{font-size:16px;color:var(--text-secondary);line-height:1.85;font-weight:300}
+.about-prose p{margin-bottom:20px}.about-prose strong{color:var(--text);font-weight:500}
+.about-aside{display:flex;flex-direction:column;gap:20px}
+.aside-card{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:24px;transition:border-color 0.3s}
+.aside-card:hover{border-color:var(--border-hover)}
+.aside-label{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;color:var(--text-dim);text-transform:uppercase;letter-spacing:2px;margin-bottom:12px}
+.aside-value{font-size:15px;color:var(--text);line-height:1.55}
+.metrics-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.metric{text-align:center;padding:18px 10px;background:var(--accent-glow);border-radius:10px;border:1px solid rgba(59,157,217,0.08)}
+.metric-num{font-family:'Instrument Serif',serif;font-size:32px;color:var(--accent-bright);line-height:1}
+.metric-label{font-size:10px;color:var(--text-dim);text-transform:uppercase;letter-spacing:1.2px;margin-top:6px}
+
+/* EXPERIENCE */
+.exp-timeline{position:relative;padding-left:40px}
+.exp-timeline::before{content:'';position:absolute;left:7px;top:12px;bottom:12px;width:1px;background:linear-gradient(180deg,var(--accent),var(--border) 30%,var(--border) 70%,transparent)}
+.exp-item{position:relative;margin-bottom:52px;padding:28px;background:var(--bg-card);border:1px solid var(--border);border-radius:14px;transition:all 0.3s}
+.exp-item:hover{border-color:var(--border-hover);background:var(--bg-card-hover);box-shadow:0 4px 24px rgba(0,0,0,0.3)}
+.exp-item::before{content:'';position:absolute;left:-42px;top:32px;width:11px;height:11px;border-radius:50%;background:var(--bg);border:2px solid var(--accent);z-index:2;transition:all 0.3s}
+.exp-item:hover::before{background:var(--accent);box-shadow:0 0 12px var(--accent-glow-strong)}
+.exp-meta{display:flex;align-items:center;gap:12px;margin-bottom:6px;flex-wrap:wrap}
+.exp-company{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;color:var(--accent);letter-spacing:0.5px}
+.exp-dates{font-size:12px;color:var(--text-dim)}
+.exp-title{font-family:'Instrument Serif',serif;font-size:22px;color:var(--text);margin-bottom:10px}
+.exp-context{font-size:13.5px;color:var(--text-dim);font-style:italic;line-height:1.65;margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid var(--border)}
+.exp-bullets{list-style:none;display:flex;flex-direction:column;gap:10px}
+.exp-bullets li{font-size:14px;color:var(--text-secondary);padding-left:18px;position:relative;line-height:1.65;font-weight:300}
+.exp-bullets li::before{content:'';position:absolute;left:0;top:10px;width:5px;height:5px;border-radius:50%;background:var(--accent);opacity:0.5}
+.exp-tools{margin-top:16px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-dim)}
+
+/* PROJECTS */
+.proj-cats{display:flex;flex-direction:column;gap:44px}
+.cat-head{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.cat-line{flex:1;height:1px;background:var(--border)}
+.cat-head span{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;color:var(--accent);text-transform:uppercase;letter-spacing:2px;white-space:nowrap}
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+.p-card{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:28px;transition:all 0.35s cubic-bezier(0.16,1,0.3,1);position:relative;overflow:hidden}
+.p-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gradient-1),var(--gradient-2));opacity:0;transition:opacity 0.3s}
+.p-card:hover{border-color:var(--border-hover);transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,0.4)}
+.p-card:hover::before{opacity:1}
+.p-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:6px}
+.p-title{font-family:'Instrument Serif',serif;font-size:18px;color:var(--text);line-height:1.3}
+.p-role{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;color:var(--accent);text-transform:uppercase;letter-spacing:1px;white-space:nowrap;padding-top:4px}
+.p-tags{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0}
+.p-tag{background:var(--tag-bg);color:var(--tag-text);font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;padding:4px 10px;border-radius:5px;letter-spacing:0.3px}
+.p-desc{font-size:13.5px;color:var(--text-secondary);line-height:1.7;font-weight:300;margin-bottom:18px}
+.p-link{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;color:var(--accent);text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:gap 0.25s}
+.p-link:hover{gap:12px}
+.p-link .arrow{display:inline-block;transition:transform 0.25s}
+.p-link:hover .arrow{transform:translateX(3px)}
+
+/* SKILLS */
+.skills-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.sk-group{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:32px;transition:border-color 0.3s}
+.sk-group:hover{border-color:var(--border-hover)}
+.sk-title{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;color:var(--text-dim);text-transform:uppercase;letter-spacing:2.5px;margin-bottom:20px}
+.sk-tags{display:flex;flex-wrap:wrap;gap:8px}
+.sk-tag{background:var(--accent-glow);border:1px solid rgba(59,157,217,0.1);color:var(--tag-text);font-size:13px;font-weight:400;padding:8px 16px;border-radius:8px;transition:all 0.25s}
+.sk-tag:hover{background:rgba(59,157,217,0.2);border-color:var(--accent);transform:translateY(-1px)}
+
+/* EDUCATION */
+.edu-row{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.edu-card{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:28px;transition:all 0.3s;overflow:hidden}
+.edu-card:hover{border-color:var(--border-hover);transform:translateY(-3px);box-shadow:0 8px 32px rgba(0,0,0,0.3)}
+.edu-badge{display:inline-block;background:var(--green-bg);border:1px solid var(--green-border);color:var(--green);font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;padding:4px 12px;border-radius:6px;margin-bottom:14px;letter-spacing:0.8px;text-transform:uppercase}
+.edu-deg{font-family:'Instrument Serif',serif;font-size:19px;color:var(--text);margin-bottom:4px}
+.edu-school{font-size:14px;color:var(--accent);font-weight:500;margin-bottom:4px}
+.edu-dates{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-dim);margin-bottom:14px}
+.edu-desc{font-size:13px;color:var(--text-secondary);line-height:1.65;font-weight:300}
+
+/* CERTIFICATIONS */
+.certs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:20px}
+.cert-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:22px;transition:all 0.3s}
+.cert-card:hover{border-color:var(--border-hover);transform:translateY(-2px)}
+.cert-name{font-size:15px;color:var(--text);font-weight:500;margin-bottom:4px}
+.cert-issuer{font-size:12px;color:var(--accent)}
+.cert-date{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-dim);margin-top:6px}
+
+/* CONTACT */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+.contact-prose{font-size:16px;color:var(--text-secondary);line-height:1.85;font-weight:300}
+.contact-prose p{margin-bottom:24px}.contact-prose strong{color:var(--text);font-weight:500}
+.contact-cards{display:flex;flex-direction:column;gap:12px}
+.c-link{display:flex;align-items:center;gap:16px;padding:18px 22px;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;text-decoration:none;color:var(--text);transition:all 0.3s}
+.c-link:hover{border-color:var(--accent);background:var(--bg-card-hover);transform:translateX(4px)}
+.c-icon{width:42px;height:42px;border-radius:10px;background:var(--accent-glow);display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--accent);flex-shrink:0;transition:background 0.3s}
+.c-link:hover .c-icon{background:var(--accent-glow-strong)}
+.c-label{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-dim);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:2px}
+.c-value{font-size:14px;font-weight:400}
+
+footer{text-align:center;padding:48px clamp(20px,4vw,48px);border-top:1px solid var(--border)}
+.footer-tagline{font-family:'Instrument Serif',serif;font-size:20px;font-style:italic;color:var(--text-secondary);margin-bottom:8px}
+footer .copy{font-size:12px;color:var(--text-dim);letter-spacing:0.5px}
+.scroll-top{position:fixed;bottom:32px;right:32px;width:44px;height:44px;border-radius:12px;background:var(--bg-card);border:1px solid var(--border);color:var(--accent);font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;transform:translateY(20px);transition:all 0.3s;z-index:100}
+.scroll-top.visible{opacity:1;transform:translateY(0)}
+.scroll-top:hover{background:var(--accent-glow);border-color:var(--accent)}
+
+@media(max-width:900px){.about-grid{grid-template-columns:1fr}.skills-grid{grid-template-columns:1fr}.edu-row{grid-template-columns:1fr}.contact-grid{grid-template-columns:1fr}.certs-grid{grid-template-columns:1fr}}
+@media(max-width:768px){.nav-links{display:none}.hamburger{display:flex}.hero-content{flex-direction:column;text-align:center}.hero-photo{width:160px;height:160px;order:-1}.hero-sub{max-width:100%}.hero-ctas{justify-content:center}.hero-tools-strip{justify-content:center;gap:16px}.hero-status{margin-left:auto;margin-right:auto}.exp-timeline{padding-left:28px}.exp-item{padding:22px}.exp-timeline::before{left:5px}.exp-item::before{left:-30px;width:9px;height:9px}.proj-grid{grid-template-columns:1fr}.cursor-glow{display:none}}
+@media(max-width:480px){.hero-ctas{flex-direction:column}.btn{width:100%;justify-content:center}.hero-photo{width:140px;height:140px}}
+</style>
+</head>
+<body>
+<div class="cursor-glow" id="cursorGlow"></div>
+<div class="grain"></div>
+
+<nav id="nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="#top">Saksham Tanwar</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mobile-overlay" id="mobileOverlay"></div>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about">About</a><a href="#experience">Experience</a><a href="#projects">Projects</a><a href="#skills">Skills</a><a href="#education">Education</a><a href="#contact">Contact</a>
+</div>
+
+<header class="hero" id="top">
+  <div class="hero-orb hero-orb-1"></div>
+  <div class="hero-orb hero-orb-2"></div>
+  <div class="hero-status reveal">
+    <div class="status-dot"></div>
+    <span>Available Now &bull; Full Work Rights in Ireland</span>
+  </div>
+  <div class="hero-content">
+    <div class="hero-left">
+      <h1>
+        <span class="line"><span class="line-inner">Data &amp; Business</span></span>
+        <span class="line"><span class="line-inner">Analyst. <em>BI Developer.</em></span></span>
+      </h1>
+      <p class="hero-sub reveal reveal-delay-1">I help organisations make better decisions by building dashboards, analysing data, and translating complex findings into clear actions.</p>
+      <div class="hero-ctas reveal reveal-delay-2">
+        <a class="btn btn-primary" href="#projects">View Projects &darr;</a>
+        <a class="btn btn-ghost" href="#contact">Get in Touch</a>
+        <a class="btn btn-ghost" href="https://7c161a78-b1d9-4eae-a061-8c3fa863e043.filesusr.com/ugd/ab9672_1d5a19660aff43e28666f1797fd4de03.pdf" target="_blank" rel="noopener">Download CV</a>
+      </div>
+    </div>
+    <div class="hero-photo">
+      <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAEtAUIDASIAAhEBAxEB/8QAHQABAAEFAQEBAAAAAAAAAAAAAAUDBAYHCAECCf/EAEcQAAEDAwIDBQQGBwYFBAMAAAEAAgMEBREGIRIxQQcTIlFhFHGBkQgyobHB8CNCUmKS0eEVJDNygrIJFkNjwkRTVfGDosP/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8A5PREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERARF6AScAEk9Ag8RZppjsr19qJjZbfpyrZA4BwmqsQMLTyILyOIf5crZ1g+jHdZml181RRUh24WUcDp8+eS4sx8ig59RdeWz6Nugafu3VdZe617QOMOqGMY49dmsBA+PxWUU3Yf2Vw4xpSN5HV9XO7PzfhBw2i/QC39l3ZzSDEei7G4f8AepGyn/8AfKq1fZb2cVjcTaJsbQf/AGqRsX+wBB+fSLvGfsI7J58l2ko2k9WVlQ37pFjNz+jD2e1JkdSVt9oXOB4GsqWPYw9NnMJI+PxQcaIukNQfRSvETGusGraGrcSeJlbTug4R0w5hfn5Bar1Z2Pdo+mWOmuOlqyWnaHOM9HioYGjm5xjJLR/mAQYGi9IIJBBBHMFeICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIvWguIABJOwA6oPFdWq3V91rG0dupJqqd3JkTC4+/0Hqtk2jsX1FDaKO9aohfaaarc8QUrxioeGBpJc0/UHi677cgME7U0ra7bZ+7prZSRU0XAeLgG7jkfWPN3XmgwPQ3YVUVfBU6puJpYzv7LSEOk683nLR05B2fMLeWi9FaS0u1jrPZKWGdv/qXt7ybOMHxuyRnyGB6L2hk8I3UtTSEgboJuOUFXEb8lRcEg6q7ieM5CCRa7ZVWO6nko2ashpu7Mzjl7uFjWtJc4+QH48hzKiTqoSvrI6ehqXupmkPwzwDlvxHnz5Ae7ODgMqjqYXO4O+Zkcw05wOhPkPermiqYKklsEgcGuLcg7EjmB5rXV5r3yPnpopu+EbSDI8F/HLw5Ba0AHdw4R1xjAOyxSg1vX0le/2KqqJGNHE8974WnbvPCc+EDbDSPQnmQ3yRwkgnGOedl9NBJGxwRnOMbLUlTq+W41UkTK+roYGcUUYjcA7iAGSeJ23IjofUZwvuo1nV0TomQGnlc6EB/BIXOmIOAcDJb68zsM+QDbTHMPKRmM4GCCqwwtM0nafVd841VM9jB9VrmNeTgnPPBG3v8AiVlVg7SNPTsZDWV9JSVMpaGw4LpMkbeFo+HTp5oL/W/ZtojWTJHX/T1HUVD/AP1cbe6qM4wP0jcOOPIkjYbLnztF+i5X0okrNDXb2+Mbihry1kvTZsgw1xzn6wbgdSusGOZLEJI3h7HDIcOq+CCg/NDUFku+n7lJbb3baq31cf1oqiMsdjzGeY9RsVHr9I9YaV09q22G26jtNNcafm0SNw6M7bseMOYdhu0hcrdrn0c7zYGy3TRr573bhu6kLc1cQ35ADEg5csO3+qcEoNCovXAtcWuBBBwQei8QEREBERAREQEREBERAREQEREBERAREQERZN2Z6G1B2h6sptN6cpRNUy+KWV+RFTxgjikkd0aMj1JIABJAIROnrLc9QXintNopH1VZUPDI42+Z6knYDzJ2C7d7DewCxaEporxeO5vGoiGuE7mZhpDzxED1z+ud9tg3cG8tfZXpvsyZpSxWiMVFdPPJLX3CRgEtU9rR/CwZPCwHA9SSTupkQ7hoAxsg0r9IL9GbPCOkNS7Hv4B+C1vRjgqD6BbG+kKc6it8GfqUOf4pHD8Frr6lT70GQUMvhCl6eTksao5MdVL00wwN0E9DIryF/FjHXbKiKSYghzTuDlWV8uzaMiH2p0JdGH8QA8QJ9c5GM+n4hfX68soqCetldGxhJgidxgFwBHFg9Of1uQ2Wt6q6Pt3t1eyWV4mL2NY2DhIaGhufEPPiw4eShNQ3RtU59MGVE1R35YwGNpa3PLIAznzVe6UtxqbZGJGGId0/Hh8Tcu+rkk528sbEDbAQWN3vtwFO3uKsiR73RuBPE7kWk5aBlrgTzztnzUNG680TI7oWyzd9K1niHE1rRwEgD025+QUjXRGhjjbNHCGBvEXBuCSMjPvyB8+fVWUl47qKCKR3FEARtu1wLskHPTf4Y92Ar1t9vMlrt0j4qiRswlIM2A145BuSN+RO5OQ4bBe1FyrKOZ0b+KWoeAOLiyG5GCAWjdoIAB5dOfOEu1+lmoKWmLo3Q05PdMxwuiDgM7jnu0eeRjKiLndqiUskhkcHsA3zgnbHv6ef2oMjqL9ijlkkZLNOQMPMh4c9duZJzjntusYhqpIJBXufxVReXsGQcYPPcHHnn8mKdFV3GrZE0vdPJ4WjiJV82iqbLUsgvFG53GA9mXAcbejg4dNj9qDqrsB1PqGrtzLffDSVNKeFlNVxZDuPDi5h/axjGQNiRk+ILbj8YXM30dLrI7U7aUSslpIGPmjikfh/HwkFw25DJODzK6SfISMnG6A926+CfVfDnbr4LsINT9tXYjYtdMkulr7m0X8AkztZiKpPPEoHXP643334sADjnU9hu+mr1PZ75Qy0VbA7D43jmOhB5OaehGxX6OF6wrtW0BYe0GxOobpEIauME0ldG0GWnd/5NPVp2PocEBwKinteaSvWi9RTWS90/dzM8Ucjd452dHsPVp+YOQcEEKBQEREBERAREQEREBERAREQEREBEX1FG+WVkUTHPke4Na1oyXE8gAgltG6bu+rtS0WnrHTGorqyTgY3o0dXOPRoGST0AXen0eOzaz6Cuho7cBNVU9A5tZWOaA+pfJI3f0aO5Ia3oM8ySTZfRr7I4+zHTArLvDE7U1yiY+sePEaZh3FOD6YBdjYu8w1pWxNAOEuqLzIOTaSljP8Am46h33PCC011/eO0rTlPjIip5pD8S0fgs3ZEe6bt0WEXXNR2zU7OYp7YPm55WwgMNAQc9fSC315Awcm0MIx/+Ry13WeGYOWd9uMpk7Sqpuf8OGBg/wB34rBrlsOLyCCrSy4UpSy8iCscpqlpAOQpKkqACPFt5IJya5U1DTmoq5u6jHMjflvy5lQmubsbtQup6UPdWd0Ym0z48PaA7HeHowHI3zvtnG6l79Q0ho7VPJFI5tWJYWQsGXPzgPJI3xwluOQ3ysv7DdKvrtT1+pLtCypDmOjY5zMsLnEEubnfGBz89uQQRXYv2fw01BHc71RuZcpcvwG8XA3kBvsM4z57+uFm2qtK0FY2Zr4wx5wOLhB2IIO3xWyaxkMUTQ2NrQOWNljF+rIoYJC4cZLT4R1P4IOXtfaacKruqmLvGtJw/lv6bLXlytJjcxrP0fAAMZ4h9q6H1hx1QkeYMgjAbwHAPqeWy1Ff7bUOkPdxlpHvQa0ulIePuWk44gDtyOV8tgLWZc7hPULJ57O9hc+TiJzk5GFZy0beLxgoLLT8fstygqXBhDHhxDhkfELc8Gk6DXVguldJDHDX1ID7ZJwjMbo+R4eXC4jhORjGSMEALUbWNj2bstj9mF4FOWwujMk3EGxku+qPL0+7zQa70pVV+nL/ABVkrzCRM5knduGYy0kcJxy/rtsuybBVGqsVFUGVry+Fp4mDwu25jO+65r7UdPPt8IvUcMMsNWAHZduyRhy0+fIYz1963Toy9U0elrfHJK4BkDGsHCSS0AAHl5IM0dJhUnSqDdfKP/3HfwFfBvlEf+o/+AoJx0ypPmUI++UY/Wf/AAFU3X2jxzk/gQRvaloq0a+04+13JojqI8vo6trcvp5PMebTgAt6jyIBHEmqbFctNX6qst2gMNXTP4XDo4dHNPUEbgruZ19peglP+la07ddL0GuLCKiihLL3RNJppC0DvWczE455HmM8j5AlByii+pGOje5j2lr2khzSMEHyXygIiICIiAiIgIiICIiAiIgLqP6C/ZQ283p3aRfKbNDbZe7tUcjAWzVAHil36R5GDj65yCCwhc9dn2lrjrXWlq0tam5qrjUCIOIJEbeb5HY34WtDnH0BX6kaP0/bNKaXt2nLND3NBb6dsELcDJAG7nYABc45cTjcknqgs75Nwmrdj6vI+eG/zUZ2YQ4m1DO4eJ1wYxp/dFNCfvc5XepSRFPsBxEj5nC87MnNlsdXUAY7y41Dc+fdyGL/APmgiqFpn7ZLs87iCjgZ8xn8Vn6wLSB9o7SNUVPPhljiB/ytAWelBzH2tS972oXfPITxMHwhb/JYvdG4jkP7v4LIe0Y952j3d/PNe4fJpH4KCu7f7vIf3D9yDAoIR5LINJ2ltyu0NK48LXEEjOMgEZ36bZPwUXTMWWaEMUN7ZLNw90I3h4Jdu0tLSBwkHJzjO4GckHkQyCxXKa/1lBHZ6KM0huUtPTvEh4jGCxjnNbnwjIz/AFyuk7PRU9qtsVLAxjGxtwGtGPzzWhOyV9P/AM711RFSiKipD3dEHHiI8LC7xHOehz1JK3xRVBmaJXuGB1QU7k972kZAzt5YUPJb2Oy5+c+9TTommpMz3ARtySFh2s9XWu25jkqWM2yN/wA+aCP1XFDDFI/LOXwB36LTepogZ3Oa5ud9s+qyK9a6oK8vhjqI8A53I3wsIu1fHM5zmSNcemCgiK6F/VoIwouagMh2jV6ah3fcJOR719yVXC3whBjtVbuF+HtIythaF0laq+ijq6a4PgqWt8TJPE12/puDyWDV8z5HnJwq9hu9VbqkGnnc3fPDnbKDZ2pLK+4WOp0/O93E9pMTm/tt8TftA/Oyq9n7p57E1lUAJYT3Z4W8I8+XQ77jp8lH2+6zVMcdUS4Fp3Plnksg0K+Geir4oGANhrpNgOrgHnPxcUEg6nyvk04Ug6MZXwY0Ea+mCpGnwpUxKm6IoIt1PtsqTqc+SljEvh0W6DnD6Q2i/YKxuqrfFinqXhlY1rRhknR+37XX1/zLT67dv9opLxaaq110QkpqqIxvGBnB6jPIjmD0IC421XZavTuoq2y1o/TUspZnGA9vNrh6EEH4oItERAREQEREBERAREQERV7dR1NxuFNQUUL56qplbDDEwZc97iA1oHUkkBB2B/w/uz/uaC59o1wp8SVBNBbONp+oCDNIMjfLuFgIP6sgK60JwMqA7OdMUmi9C2bS1FwGK20jIS9rcCR+Mvkx0Lnlzv8AUpuqf3dNLIf1WE/YgxDUEplg2zmR4x8XZ+5XnZbCYdC29x51BlqfhLK+Qf71F3uZsMTZZDhsXjOfJrclZJouE0+jrNAecdBC0/wBBjXZgO9vWpqz9u5Sj5HCzxYP2Pt47NXVZ51FdM/P+srOEHLWsMya4vDz/wDIT/Y4hRF6GKOY/wDbP3KUukhqdQV9Sd+9qZ3/ADfn8VHX8f3Kox+w77kGG0rcrJtKCnF2p/aoS+nGTKGnBDBuT6kAErHaVpCybSr2xXaFj28UcwdE8cOTwuaQcDz329cIJvQFS+q1g4xcMUXtbw2FvLfhacdP1R9i6QYyOkpm8TwAGcT3E4AAHNc/9kVjqYNSObM8vZS1r3vwwOyGhvhBGxLiWjGfM8t1sOqqdcXHUphvlBaqHTYEs8cOS6sk7tzQwSYc6MNJe12xzsMgbhBjfa72oxUtBJbrG8kys3qS1waQerdskeR5HoVzBrK5X27yASXauEbQABHR5H2yBb1vVvo6/Uc76qN08x4nMp4QC9zRzcSSGsaNsvcQBncrXPaFcLNbnviZcrKxzf8ApQ1Dpnt9CWt4c+4lBrOKyQlkcg1VcaKYN8TpqBxHFjfHC87K7t4vsReY611fDGd5IYWHbzLRIXj4tCt5LzDO4uZwSM/ajfn7CpiySxSzxFoH1gWvbsQfMFBf0czJI2zSVsTCRnDmPH/jhULrc4Kamc8VkBOOXE4feAs8uOlp6yztq6UMe90YdIGjxM3IDj0wcHrnLXZxtnV93tEHtJgqq7gwXF7HxlrnNaC53CRkZwDzIQY5V366VEpMElDwnkDXwgn5vXxam6xnq2+xwQ1Dv2GVcLiR7g9fbaumpSfZGxUTOQ4Nnn3v+t8iB6K7hFLWMPtVRLLxc3SPc7PxKDY+hdTVcFYbPfrXVUsjvB3ksZ4Gnb9bkR6rZvZdTTm86kJ4u4FRA4Enm8xeXuI69Ryxvz7arI6KoifbKmSIOcPqO2XROh7c86dhqO9no7m7ibPLA/GXcR5sOWOxnYOacdEGYvixz5qmY/ReWKSrndLRVrmzVMLQ4Sxx8PesJIDiOQdkHIG3I7ZwL50WCRjdBYFg8l8PZ6K+dGVTez0QWDmei+HM9FevZjoqTmoLN7N+S0V9KTS3eUlHqyli8UJFNWcI/UJ8Dzt0OW5P7TQt9vCh9W2WDUGnLhZakAR1cDo+IjPA7Hhdj0OD8EHDaKrW009HWTUlTG6KeCR0cjHDBa5pwQfiFSQEREBERAREQEREBbn+hjpVupu3a1zTRtkpbLE+5yhziPEzDYiPUSvjdjyaVphdn/8ADt08IdNan1VI2IuqquOghOPGwRM437+Tu9Z8WegQdWKzvRxa5x+03h+eyvFY3px9kbGASZJGtGPn+CDXnaQ+T/ly6CL/ABDQVIZ58RjIH2lbFcBRWUtZygp8D/S3+iwTUIbIY2vALX1FLGR5h9TG0j5FZtqZ/dacuL/2aaT/AGlBBdkkPdaKpT1kLn/M5WWvdwsc49BlQWgIfZ9H21mMfoGk/JSdxnjFFM1sjeJ0bg3frhByzSEvfG4nJLXEn3kKhf8Aa3zH9wraFBoeyW5zXXK4y1DmtA4IAGtz7zkn7F7cbFpOogdC22SvadiXVJb9uUGhaZuRgLaVrt+k32kW6khkffaUx+0zSvcPE4AktAOOEHb4DPPez1LpjTtJBx0cktJIBsO/EzD8MA/aqmg20bNU6ivlXJw0MVIwRyY2LnkYxnqOFyCZ7Koqyg1/RWZsrJo6elllkIBw17uFvUbnAGSeuw2AWwNcunFfCIm8Unsk7Wt8yXwkf7SsN7D5oKvX18uMOXwviayIvxkDiLj9pA+A8lsXWFM32+0XHia1kNe1kxPVkjHxAfxvj+SDTd40HSz0NTUakvNfTtl8XslE5rOM9O8dwuLvdyHxWl+0ChpKuyts9LQ2+lbTyh7ZYqctL9iDxA7nIxyI5fBdeaooaV9M8y78xgDcrSWrtJtqZnCkpeJzjnc5Qc4QWmSmppoGd2/jLfF3RBGM4xv6rKNEWKqkf3hA7iIh0ry4MAbkDO/vxtn3LYVDoGX2jNS4NaT9VgWy7Ppqjs1nFS2kgknfiOlZKAcyuIDHYI5cRGT8tyEHtDa5p9MVtqpYn07KMiKqqOEcUj2tB7oeXC58hJ9QOpxz/wBoVqcK+OJuRL33A1xbkjjBjO3XZ5XaMVmhtGkBRsJmIYS+R+zpHHdzz6kklcrdqFOJLtUiMcOeLh9N9kGia+1mnr3RPdMY3tPcz8GA/bGQN8jORtnkvnT1ruE1dGKiumo4sEyPeQAB5DzWb3ygE7aepo4mNa6MOkaBjhcdzzVGjpdmhzn8XLc7fJBU0XUzxXOKGoiLsPGJOHhEgzs7HQ+a6c03TPjsJNDQSSPe98hdK7uoy5ziTgkF2BnmGkeq0xpex0hphVVLw6QeIHlw48l0D2fROn0lTudnjaS1wznB5/igxKDS01/vrJNTTw+0UTO+gZQBzBFxkhvidkkjgdvgA55LNoaSGlp46aBhZFEwMY0uLiABgDJ3PxXtliMlTc6vgLQ6p9njdn6zYgWn5SGUfBSBi/OEEa6LZUZI1Jvi25Ki+LbkgjXx7Kg6NSckW3JW74j5II17FRc1SD48dFQfH6IOPvpF2MWbtOrJY2NZDcY21jAD1dlr8+pe1x+K1yujvpc2fjsllvbQwGCofSvOPEQ9vE34Du3fxLnFAREQEREBERAREQF+jP0NLZDbfo86eeyHupa11RVTn9txme1rv4GsHwX5zL9TOxOmZSdjmjKdjAwNsVESAP1jAwn7SUGXq3r6YVMPDkte08TD5HH9VXke2Nhe9wa0DJJVjV3SngBy4HGcknZBhV2jkdfLbRmNwLrjCHgDOBGHTf8AgFk+qZRV2aqoYXNDpo3Rl7nYa0HmfX4LGr/qagjqhUvEZla3wvLeWxGw89zusI1BrOWV3gmOQDgjP5CDYUt5jtNBHSGcPbHG1o24Rt1A6rEb7rWnBJE/GcYA5clrS4X6qqJMFzgDuCeeeqhK58mDI+cZPpv96DLbrriZ5LRloHLfZQFbfq6oJ/TuaOYy47LF6qvhjdgOe53v2VhUXBzxgPwEEjdK6qmkIM7iP82VZQXmromSQSTyezTYErQdjvsSPT+asDVjhOT9qsauo72NwG+Qg3l2D3JtHqKsp452OjlpmOHCduI77ff78re1Sae4Wt9JUxiaGVvC9pPMH8VxP2Caglo9dzUL3ciOHiO5aRyHyK67obnE6FoM2x5Z6oPa6ku1FEeM0lwi5MMshhlA8iQ0tcfXDVhN7vhpstfbHU7s7/pI3Y+TlN6y1AYIHYIDQ3HPdaI1fqN5keQ/GTyCDJ6nVTRMyJsUpJeBjwgu9AcnHyW5LLHaLLSw1V7ru+uHCD3QkyyADfhA5ZzuXc88sAADmzRFDPX1ra+sc5jAfAD9697WWGsubqis1HVNpnZ4hBO5haeueFB0Vq7WkNbZJmUIAYNsg81zjqWUz3OV8vJ2RuVaab1PTWexzUH9t1NTDjiZ7RIZHA/5jusG1VrVtRO6KjqWwHO8jmhzj7gdvmgyDu+4e2J8gDcnunOO253aT08wTtzyr7+xqx3DJHQyytOMSQN71m/LxMyPtWLx3aSppIOJ4fg5L8Yz8FLU5jmDXPa1/lkZwgyS1W+6wuGKOrxncCJy3P2a3SsZZ6q1w08huMjgaZkrC1sWRgyPzya3Y4/W5DrjQ8YbM3upTxNJ5O3BW6vo6sZJNcy1ozHE0DzHEcnbp9UINi0Nvit1vgoIHSPjgjDA+Q5e/HNzj1cTkk+ZK+iz0UlLF4uSoOj35ILFzPRUnM2UiY1Skj9EEc+PIVu+JSkjBwqg5myCKkh9FayxbqZkYrWWLmg1N9I+3MrOyO8PMXG+n7qeM/skSNBP8Jd81xuu9+0+kbUdnOpIS0O4rVU4GOvdOx9q4IQEREBERAREQEREBfq5p/Fp0ta7bGA32OihgJPTgYG8vgvyjX6M12qZKi2wVMcznCaFsvwIz8t0GW3/AFJTRAs/xZBuA9uce4cs/wA1ry/aoraqV4E0jRzIBAURdbzK4tdITh/Mg8ljtZcWue/Dhy6n1QXtyrnzl2XOe7O5c4lQ9Q9rB+lme0c99x7twoi5Xl0THRNwR5rG7jeJ5y4lxGdtigyG4XyKEOaxrOXMLGa67SVBLXPwPeoqeqJzlxJVqXu55QXr6k5OXFW0tWc7bqjHHLUzMp4InyyyODWMYCXOJ5AAcys0slgtdnbI/U1PJLO9hDGRuBEB6Ejk89OeB6oMJdLPOeBpLR1d5BXFP/hvlds3HCzPl5rMbdpR9+ln/sJrrj3QD5I4hw8APIkHfG3RQepLPUW2R1PU4EzD+la3cMHRvvQYxpaqktuv4ZAW8ErcEO5ZHx8l0rRakYGGUvEgYwkgj1yT9q5fuEbm3iin5FsmD+fetvWOsnjpOIkd4WNaXHOcY3+e6DMdX3N1VRyOY7LA0EHzyP6rT+qXexcE1SSZJN2t/ZaPxWdxVInjbDI5vAd/QHAyPuWvu13jqRC6lzyDAR+fVA0tdK28V3dNqvZ2NOSA/A4R1/Pms7qLHYZaOQT3J9TI9uX9y0ANPx2/JWH9kug7cyVtfqFtTOHnJDZi0Eeo5LfFxh7OYtOCGnghYQ3HAWt8vnzQc63nR8DJ3VNNdmiEuI4THy9BhYleNJMlmJjly47klvNbi1Na9PVDyKGURsaMgN2B+AKwyqtrA5wjkPCP3iPvKDXJluNie6ncOOLmMDKzHSt09tga9rj4dnDyKxvUtNcoZ8OeyohzscYcPervRLHx1ryAeB7NwehQZ82qa3c4Hmugvouhk9gvFW3Bc6qbGSM5w1gI9ObnLlu51odAWQk8YJBHmux/owWl1F2OWqomj4Jq4yVLjkeJrnktO3m3B+KDNpInAnPJUTGM8lLzRA7AK2fAcoI57PRUZGeik3wHyKoyQ+aCMkjBHJUXRjBUhJGqDmbFBHyM9FQmjHkpCRioSsBQQGoKIVllrqMjInppI/4mkfivzoX6S3SQUtBUVTj4YYnSH3AEr82kBERAREQEREBERAXYelrvJLpKyv5A26Ak9M923f7Vx4ujezy6d/2c2d7n5kjgMfwY4tH2AIMsvFxe1zgHuIydg5YzXXNz+IBxzzO6p11a9x4iSceSiqmTiJPmg8q53uyeLZR8z9ueSvt7zyVvK453xlBRk58R5q4s9suN7ukFrtdNJVVc7sMjZ95PIAdSdgpDRul73rC/Q2ax0rp55Dl7jsyJvV73dAPt5DJIC6mtOjtLdlem6SB9ZTMrakn2uuncGyTuwPC0c+AHk0cuZydyGO9lvZ1btFQx1taIq68PHDPOB4Y2kYcyPIzjmOLYn0Gw112w0otuo6qkdxjhkcBkdMrfFPXWu5eCgudFWOI+rBO15+QJwtJfSOqD/wA8TNazHIkj3BB8dhNhus+roLlRXOOhayGV0gMZk76NvDxxkZAAORvnYgHGwV72paRuDahtd7O409RGJmSnBa0EA42/W3HNR3ZVrq0aVqSK5lTUVElLM2OKBgP1+EAkkgfqO2zn5raNr7V+zLVNNDo66zT0FTO1scArWiMOeG4Aa9riA7bAyRkkDfOEHJmpqV8bXOj2exwc3flg7LLLPcI5rVFVguxO0HY9QN2n3HI+Cnu2axUFuvEtFaqSSKniO5eS5zj1JK1dp+8R2i4SW2ueGwSZ7pznbB5cNt/w9fVBsJ90jfAGkeH6xydyPzuozUfC9sJwBk9W5wrCeVz5w1jssON3HYjG5z08/istpKFtytMcTBxygHLi7YHmMD8/ggurHdcWdsMbcuDcg4xke5YRrCC81bJnwGVgPkcBbBtVOyyUbYq2Fr3EZa9p4gCSAN/Pmoa9X2nNLIx1OOOMEu4D4SR9/RBoaqhvcNSXMlnjkBPKTB9/NSdmuV9eQyqmkLRzLzlTF3ghqHmYDBe47EqILpKbk1zo8b7EoMijmgkpnMqAOIemVSt7WRiURBrcjYgqAqquRwyTiJ2+WnI969ln9gje5rjhzRtuM/NBdGUTVQjklDGveGF43xk4JwPRdq2Ttv7JNNadt9nprvUMhpYGxRRexzAhrQAAONoPkuBqe4ObM2cPIcDhpJxj1zjCyGklYYGSuIMrsZc5+T9pz/X3IO26D6R3ZfVVRikqrtTNBx3ktsl4ceewJx8Fmmide6O1tJNFpy8RVU8LQ+SFzHRvDTycA4DI9RnmPNfm/qW+SU9K6GF4aXDLnBu58sZ5DPoQrTR16u0M0MtHcJ6aZp/xopCwtAHmPcEH6ougyMjB9yt5YBj1XGvYT25R6HvdXDqKS4V9mqouENicHuila7LXBrnAYIc4HH7vkusNL9oOiNT08Utn1Jbp3TY4YXTBkwOcYMbsOG58kF9NAR0VrJFgFTsseRhWc0A3KCEljPkraVmByUxLGAeSspo+aDDO0uU03Z5qSoBwYrTVPB90LivzqXff0kqyW2diep6mJ3C59M2DPpLIyM/Y8rgRAREQEREBERAREQFtPsluHFp6ejLiXQTkgeTXAY+0OWrFlvZfW+z32Slc4htTEQB+83cfZxINmzSuOeqtZHHfdfcjjvhW7neaCm875Uhpax1WpL3DbqV8MIcQZp5nhkcEeQC9xPIDPxOANyomWVoIDnNbxOAyeW6mrBqH+yYX01O/DJHh3ex7d4QPPzGTt78blB1dpJ/Z52Y6bba7fd6V1TLGHTVjW94+ofg4Li3Ixvs3Ow+Z0N2kaqkulVUyy18ktRwgF/ecJcDuABkbA5OBjcnHJYTUaprI61jA2UQTeb3cJIBGOLz6c9s+9Q+o6o1sMlVTOdFcKbdjuRcAMFjsee4+OUGGalutfTVznPqZKhuQWl5LgR6Z2Hwwru7dpF4ulBQwVdNFK+lpmU7Zg8guaxoa3LepwBnfdeXNlLdLW2s7xzYZQThzR4T1yQAG4OeZWKGB0Uz4HkYaeR2z+fggn7frCY36hnqYoxwN7oOiYGEjPXz6891Makmhn19bYpXcELZhJJlw5MHEB0wHEYWs7gHxVDXDLSDkdMFTk07Kq/U8zC58rnNOHAvyTjpzOSg7Ks1pqNf6Mm1Hd6iNpi42OcyMgzGMNHFv5kuBx1acenLva1bBGagsbju3ZHzXcWh7BPZuzazacnj9nqpqDEjJn+PvSDJKXf6nvzjljbbC5C7bYIqKvr6Z0jJAwkFzc4QaxsWpbnQ0xp+87yJwGA/kB+T9y2nozXNIGRU1U+RkkTQ5p54JO592AB6LTlqibPRAOABaeeVP2ilbIHxylwcRwhwOCPz8kG5rxq+K4xSASHHCY2gdDnp58gPXJWv6+4E1MgLx4XbDiy0+ufwUJM26UUX6CcSb44HO3c3GP6fBRE1fVDLpYXtydhhBlddWMkwCWhreg/PqFC1k5IMTG44vq7HcqJbdX96AY3gkYxw5R1W8v4yHcIyScHbbmgmrbI6OncH44DnJJ5FY7drmZJi1hJjZtgHp5qh/ab5eKCGQtDskuB5qIqHOjnyCUEq+oYWiVjuEt8v57fLdSdDcT3YDyeFuwwdvL+XT+Qxd7wI/DjDgq1POWsDSeqCvfpzLO53FxFzvEfM+f5JX3Zqkw0zhxEZdzHuKsKx5e1pzyOF8RycLCM9UE6K8mJ44skAFSVousj5Wt7xwGx2PLCw+OUguy47hXFDUmKQuJ2aCg3dbO2PWenLY2kp9W3RjchsMXf8AEG+WA7OBudv5Bbw7F/pMW+ajZZ+0KaSOeNgEV0jhLmyAAf4obk8ec+JrcHyC4aqKiSWUSOcSRy3UtFXuNNG7iPEMDOUH6i6c1dpTVId/y/frfcHtBc6OGYGQAYBJYfEBuN8dVISw7lfmXprV12sF1o7lablLQ1lO7ijljdgjoQRyII5g5BC6k7NvpQxVtbBQ65t9PSxyhrRXUTHcLHdXSMJJ4f8ALk+nkH19Oe7R0XZ/abKHvbPcLj3uBydHEw8Wf9T41xwt4fTJ1nQaq7R6Kls1e2stltoGBj43h0bpJf0jnNx+6YweuWkdFo9AREQEREBERAREQFcW2qfRXCCrZu6GQPx54PJW6IN1tmZNC2aJ3Ex7Q5p8weSt5HuzjGc9Fj+g7p7RZTSPd+kpjw+9p5fiPgFnU+ktTU2lqbVs1kqnWacOLapgDxG0frvaMuaw4PiIA+YQYHeJ2VAME0Tjg54WkiQHccsYPmouGpmpv0bpxPDzY8HOPIEdP/tTWoJ45Kd3fgHI4mOby+BWHzVUlPMWSgSji2J5n+qC8rbvLFU0srZniJso71owAfgr2e+NF9D43FrJmDLc7ZGx+YCxG4vD/ECCHDKt46o9/E9xPgCDOrG5j7bVUjyO8ZUPA22PUAZPv+QWOXOQCpy05Iy3fyz8VWsVZisZIXfXqQ/BHMkcHX/MVaaij4Kx5G4J2OMfYgi693Gcnl6Lan0WrLRag7bLBFcInTwwB1UI8kAvjblpPo0jjx14MdVqeQ558l2X2Q6Kpuxzsvlvt5bE3Vd3hwWOwX0cJ3EY6hxyC7yOB0yQ3VVVrq2pvd8jY59Pbad1LT4Owc4Zcfg3h/iK4Q7arv31dUx8WXzTkE56dfwXUt0vlZYfo/tq6p4jqLzJJVkA78DjhnzY1h+K4e1fcX3C9SEk4Y4j453QSukoWuldDIB4uWVkkETYJy152HQDKxuySBpgnb6B3vWX+F7A4AEHyQV3CBzWuyMg7HOD+OVE3WGLG7m8ZycqQNO2TxE7jluresgYN3c0EBFSsJyS558jyVDUUopbQ9g2fNhnPp1+xTUgbGOQAWGaqrfaawRtPgjH2oI6idicH0Kpzu4pCUgOHg+i+DzQe5IGEBwvF4g+3OzHjPXzXzlF4g9yvV8r0FAKqNccAdFTJXuUFUSu7zIJ2ClKeslLo2tk3dsB6qFBxyUjbWkl0pz4RgepP9PvCC+neZJXPJJyevPC+ERAREQEREBERAREQEREE5oO40Fs1Zbqi7NlfazUMbXMjOHOh4hxgeuF+iYv1L7BB7CYfZTE3uRCR3fBjw8ONuHGMY2wvzQXQPYR2izS2EabuFQXVFC3+6l7iS+H9n/Ty92PJBl/bV2V0dwbU3/RkEVPVuzJVWtu0U52y6IcmP8A3Rs70PPl+74yWlrmFpIIcMOaRzBHQhdZVOptsh+CORzyWlO3Gy01Y5+pbc0MlJ/vzGtyHjkJff0PnsehyGnJH4ODzCt3O8WV9znxFUSd0F8yoEbo8Efo8H3nIKm9StaZ5JI+HGegwR7x/JYtnqssujzUUgceNx4Qcv8AF06Hn8CghrPUCluUNU9gk7h4kDDycQQcLfWqe0dvarr2x2SCokpYrnXw0pGcOijc8B7j64Jx6rnvdsjh6q+tVZVWy70N3oJO7q6Kdk8LsZ4XscHA/MIOnPpW6sZQiGw0kfBR0UIbFE07RgABo9w2C5JzxSZJySdyVl3aPrC6arr31lewMklIc/hcSDjkB6LDuRQZPaw6Fobza5ZXbZeOEYKxe0zRTQMDsNJHmp+15jdgbj03QS4e4N3OFQlcXcyMeq+nh/B4SrCo42tJ3QR9+rGwQENOXHYLCaoHi4nc3HKyC5wyzzEvBAyoKv2mc39nZBQacFeFeL0c0HiL6XhQeIiICIiAiIg9aC5wa0EknAA5lTUUYiibECDw8yOp6n8+is7ZB/13jlszPU9T8PzyV8gIiICIiAiIgIiICIiAiIgK4ttbUW6uiraSQxzRO4mkfaPceSt0Qbpst+jutvjq4nY4tnsJ3a7qFUrZ2zQSQygOjkaWuB5EEYIWpdPXea01nG0l0L9pWeY8/eFnT7hHPCyWJ4cxwyCOqDVN7pfYbjUUmSe6kLQT1HQ/LCjicFT2tSH36V4/Wa0n34UHw5KD4zlZVA8PpwzxklgyAfTqOqxggBTtLIGlrCegA35ILOdjO+ezfi4jjPIj+aQ/X4SMKrcWDvCQTnpnn81bRPPHh31hzQXcsIlj9QoioiLH8lOQO8OFZ1MOZMgZJdsEFbT58L2P5sPER6LM7NHicDhwDzCwOnlmp7i8RsDiBgjyWXWq5xiOGQu4HNPCR5Hp9yDJJHRxtPGWgknDTzVpP3Uo8IJABzkL3v4pHOaCT69DyVGBzY+8DX5b5eqCLvDWQ0zpcgtDScj7lgryXgvO5JJKyzWVWwxtoo35dsX45Y6fFYo7AaR1QUOiN5p6L7i57oBavlVHkDkqZOUHhXi9K8QEXrRk4X2IXkAgIKarUkBnl4QcNG7j5BexUssjsNaT+Ck4YmQx92z3k9XFB9gNADWtDWjYAdEREBERAREQEREBERAREQEREBERAV/arjJSZicSYXcx+yfMKwRBd3GjmnkdWSNGJd2b58I2/BRvsp4eIN2UjS10sFPJTZDoZNyC0EtPmD093X5K+pqWOaGNsbw8GJxdjod/tQYnM3D8K9dKY52kbclQq2FkrgRvlfdcMFp/dH3IL+dvHEHtzgjyyFHva7fGMjyV9b5BJTlpdg4VvKzD9sH70CkqWfVeeF/kVIUgY6Zz3Z8DS4e/8lQlTGXjiA3CurE8vleyVxLGsJAJ65CC+oo4qd8k0hHE/lkHPQ45Y5b81ZVMpbIXRnHmPPCrzxMZM9/Fni2AB5YVrIzd2BhBPW66NawOc5wGw33Vw+6Miic9pPXbnnKxOKcxlzRu1fffh2cuzjzQK2V00z5HHdxyrVuDnY5X3NKxxGFQDz0QeO5o0nOF4TlexjLggqFvhVNVX7NVIoPCvEXo5oK1K3ifj0XWv0auyPQ7uyW5doXanHTCyys/u7pZXx93Gxzg6QFpDuJzjwBo3JaAAchcqWmIOlLnnDGjc4/PyWw+0ntJvesqK22Qn2DTtphZBb7ZC79GwMbwiR/7chGcuPmcAZKC27Tr/pu732WDRenmWHT0LyKaFzi+ebf/ABJnuJJJ6NB4WjYZOXHEURAREQEREBERAREQEREBERAREQEREBERAVWkqZqWUSwvLXD5H3hUkQeVzPaHmSJuHH9TO/w8/vVC6McIoXf9tv3K4XspEzOCXLhyBzuPigj7fN3cuDyKkJGhzeLAPvUfJRyxu4oj3o9NnfL+WVeUcpczgfs4bEFBQecA5yMfJW7JJKd7nxEAuGDsr6ohxuAQPRWUjcEnGUFP2uoznvDn3Ksbi9/+LDG73DCt3RE7gfBUi0g7jCC5dNG7OAWkqgQR1B9y+VVoxD7TGagkQhwL8cyOoHqgpYTBXp6r7iAIKCnhV4WY3XwG5crkt4YwgoTHoqKqSZc8Bu5PIBV4aGV+8p7oeRGXfL+eEFmr6moXE8U+WD9kfW/oryCGKD/Cbh37R3d8+nwX2gAANDWgNaOQCIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAveI/rAO6b9P5LxEFUPjdjiaW+o3+z+qt54C8juyxxPQnGPmvtEFGCCXJBheQOrRkfMKlUMYQRgfHZXa+mySNGGyPHuKCPipWv5ALyWj4XHBUjxvznjdn3o172nLXuHuKCHdA4DzVSOlqABmGQA8iWkBSrpJHDDpHn3lfCC1jpHDPGWNI6Zzn3YVwYYevE/yzsPj/APa+kQeMa1gxGxrNseEcx7+ZXqIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiD//Z" alt="Saksham Tanwar">
+    </div>
+  </div>
+  <div class="hero-tools-strip reveal reveal-delay-3">
+    <div class="hero-tool-item"><div class="tool-dot"></div><span>Power BI</span></div>
+    <div class="hero-tool-item"><div class="tool-dot"></div><span>SQL</span></div>
+    <div class="hero-tool-item"><div class="tool-dot"></div><span>Python</span></div>
+    <div class="hero-tool-item"><div class="tool-dot"></div><span>Tableau</span></div>
+    <div class="hero-tool-item"><div class="tool-dot"></div><span>Excel</span></div>
+    <div class="hero-tool-item"><div class="tool-dot"></div><span>DAX</span></div>
+  </div>
+</header>
+
+<div class="s-divider"></div>
+
+<section id="about">
+  <div class="s-header reveal"><div class="s-num">01</div><h2>About Me</h2></div>
+  <div class="about-grid">
+    <div class="about-prose reveal">
+      <p>I'm Saksham — a business and data analyst with an <strong>MSc in Business Analytics from University College Cork</strong> (Business Merit Scholarship). I build dashboards, analyse data, and turn complex findings into actions that improve how organisations operate.</p>
+      <p>At <strong>Centra</strong> (Ireland's largest convenience chain), I improved inventory accuracy by 15% through data-informed stock monitoring. At <strong>ValueMax Advisors</strong>, I built Power BI dashboards for senior leadership, used SQL and Python to find process bottlenecks (12% cycle time improvement), and automated reporting that cut manual effort by 25%.</p>
+      <p>At the <strong>Indian Space Association</strong>, I created analytics dashboards visualising investment trends for executives and managed data operations for an 800+ participant event tracking 80+ sponsors.</p>
+      <p>My MSc dissertation involved building a <strong>supplier risk prediction platform</strong> using Python, Snowflake, and Tableau — achieving 90% classification accuracy.</p>
+      <p>Based in Cork, Ireland with full work rights (Stamp 1G). Open to roles in Business Analysis, Data Analytics, BI Development, and Operations Analytics across Ireland.</p>
+    </div>
+    <div class="about-aside">
+      <div class="aside-card reveal reveal-delay-1">
+        <div class="metrics-grid">
+          <div class="metric"><div class="metric-num">15%</div><div class="metric-label">Inventory Accuracy</div></div>
+          <div class="metric"><div class="metric-num">12%</div><div class="metric-label">Cycle Time Cut</div></div>
+          <div class="metric"><div class="metric-num">25%</div><div class="metric-label">Effort Saved</div></div>
+          <div class="metric"><div class="metric-num">90%</div><div class="metric-label">ML Accuracy</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="s-divider"></div>
+
+<section id="experience">
+  <div class="s-header reveal"><div class="s-num">02</div><h2>Experience</h2></div>
+  <div class="exp-timeline">
+    <div class="exp-item reveal">
+      <div class="exp-meta"><span class="exp-company">CENTRA</span><span class="exp-dates">Oct 2024 – Apr 2026 · Cork, Ireland</span></div>
+      <div class="exp-title">Retail Assistant (Operations &amp; Business Support)</div>
+      <div class="exp-context">Centra is one of Ireland's largest convenience retail chains. My role focused on data-informed inventory management, supplier coordination, and operational reporting.</div>
+      <ul class="exp-bullets">
+        <li>Improved inventory accuracy and product availability by 15% by monitoring stock levels, restock cycles, and sales trends using Excel-based tracking systems</li>
+        <li>Built and maintained daily stock tracking sheets logging product movement, giving management visibility into fast- and slow-moving inventory</li>
+        <li>Coordinated delivery scheduling with suppliers to streamline replenishment and reduce shelf-gap downtime during peak hours</li>
+        <li>Identified inefficiencies in stock handling and floor operations, proposing workflow adjustments that reduced restocking time</li>
+        <li>Produced end-of-day closure reports, till reconciliation summaries, and performance data supporting data-backed decisions</li>
+      </ul>
+      <div class="exp-tools">Excel · Power BI · Inventory Tracking · Retail Analytics</div>
+    </div>
+    <div class="exp-item reveal">
+      <div class="exp-meta"><span class="exp-company">ISPA — INDIAN SPACE ASSOCIATION</span><span class="exp-dates">Jan 2024 – Jun 2024 · New Delhi (Hybrid)</span></div>
+      <div class="exp-title">Research Analyst Intern</div>
+      <div class="exp-context">India's national industry body for the space sector. I contributed to investment analytics, policy research, and data operations for large-scale industry events.</div>
+      <ul class="exp-bullets">
+        <li>Developed Power BI dashboards visualising space-sector investment and policy data for C-suite stakeholders</li>
+        <li>Conducted data synthesis and trend analysis for research reports informing national-level policy recommendations</li>
+        <li>Managed data collection and reporting for India Space Congress 2024, tracking 80+ sponsors across an 800+ participant event</li>
+        <li>Presented analytical insights to senior stakeholders to support partnership development and outreach</li>
+      </ul>
+      <div class="exp-tools">Power BI · Excel · Data Visualization · Policy Analysis</div>
+    </div>
+    <div class="exp-item reveal">
+      <div class="exp-meta"><span class="exp-company">VALUEMAX ADVISORS CONSULTING</span><span class="exp-dates">Sep 2023 – Jan 2024 · Gurugram, India</span></div>
+      <div class="exp-title">Associate Business Analyst</div>
+      <div class="exp-context">A consulting firm specialising in BI and process optimisation. Progressed from intern to Associate BA over 1.5 years, delivering data-driven solutions for senior leadership.</div>
+      <ul class="exp-bullets">
+        <li>Designed Power BI dashboards integrating sales, ops, and marketing data, improving KPI visibility across departments</li>
+        <li>Used SQL and Python to identify process bottlenecks, leading to a 12% improvement in cycle time</li>
+        <li>Translated business requirements into analytics-driven recommendations through cross-functional collaboration</li>
+        <li>Presented insights using visualisation and storytelling best practices, influencing leadership decisions</li>
+      </ul>
+      <div class="exp-tools">Power BI · SQL · Excel · Python · Tableau · MS Teams</div>
+    </div>
+    <div class="exp-item reveal">
+      <div class="exp-meta"><span class="exp-company">VALUEMAX ADVISORS CONSULTING</span><span class="exp-dates">Mar 2023 – Sep 2023 · Gurugram, India</span></div>
+      <div class="exp-title">Junior Business Analyst (Data Analytics Focus)</div>
+      <div class="exp-context">Supported analytics initiatives focusing on operational reporting, forecasting, and client communication.</div>
+      <ul class="exp-bullets">
+        <li>Automated 10+ reporting workflows via Power BI and Excel, reducing manual effort by 25%</li>
+        <li>Standardised KPI definitions across 4+ product teams, improving tracking accuracy by 18%</li>
+        <li>Performed market and competitor analysis to guide pricing and customer acquisition decisions</li>
+        <li>Maintained SQL-based data pipelines and validated data integrity for accurate dashboard outputs</li>
+      </ul>
+      <div class="exp-tools">Power BI · Excel · SQL · Jira · Confluence</div>
+    </div>
+    <div class="exp-item reveal">
+      <div class="exp-meta"><span class="exp-company">VALUEMAX ADVISORS CONSULTING</span><span class="exp-dates">Sep 2022 – Mar 2023 · Gurugram, India</span></div>
+      <div class="exp-title">Business Analyst Intern</div>
+      <div class="exp-context">Entry-level analytics internship focusing on requirement gathering, reporting automation, and stakeholder support.</div>
+      <ul class="exp-bullets">
+        <li>Supported development of BI dashboards, converting raw Excel data into actionable reports for senior teams</li>
+        <li>Gathered user requirements, documented process flows, and assisted in sprint planning and data migration testing</li>
+        <li>Collaborated with analysts and developers to improve reporting accuracy and streamline project delivery</li>
+      </ul>
+      <div class="exp-tools">Excel · SQL · Power BI · MS Office</div>
+    </div>
+    <div class="exp-item reveal">
+      <div class="exp-meta"><span class="exp-company">VERZEO</span><span class="exp-dates">Jul 2022 – Sep 2022 · Bangalore (Remote)</span></div>
+      <div class="exp-title">Data Scientist Intern</div>
+      <div class="exp-context">An ed-tech company offering applied data science training through real-world projects. I built classification and sentiment analysis models on production-scale datasets.</div>
+      <ul class="exp-bullets">
+        <li>Built sentiment classification models using Python across 10,000+ Amazon Alexa reviews, improving accuracy by 8% through feature engineering</li>
+        <li>Developed a price range classification model for mobile devices using ML, applying EDA and model evaluation techniques</li>
+        <li>Produced insight-focused reports translating model outputs into actionable business recommendations</li>
+      </ul>
+      <div class="exp-tools">Python · scikit-learn · pandas · NumPy · Jupyter</div>
+    </div>
+  </div>
+</section>
+
+<div class="s-divider"></div>
+
+<section id="projects">
+  <div class="s-header reveal"><div class="s-num">03</div><h2>Projects</h2></div>
+  <div class="proj-cats">
+    <div class="reveal">
+      <div class="cat-head"><span>BI &amp; Dashboards</span><div class="cat-line"></div></div>
+      <div class="proj-grid">
+        <div class="p-card">
+          <div class="p-top"><div class="p-title">Supplier Performance Analytics &amp; Risk Prediction</div><div class="p-role">Dissertation</div></div>
+          <div class="p-tags"><span class="p-tag">Python</span><span class="p-tag">Snowflake</span><span class="p-tag">Tableau</span><span class="p-tag">scikit-learn</span></div>
+          <div class="p-desc">End-to-end supplier monitoring platform for Parker Seals PLC. Consolidated ERP data, engineered 7 features, evaluated 7 ML models — SVC at 90% accuracy. Two Tableau dashboards for KPIs and vendor recommendations.</div>
+          <a class="p-link" href="https://www.linkedin.com/in/sakshamtanwar/overlay/Project/603176407/treasury/?profileId=ACoAADrUeZsBC6t9EgcUpe1FIUF1E00AmPKSoSQ" target="_blank" rel="noopener">View Report <span class="arrow">&rarr;</span></a>
+        </div>
+      </div>
+    </div>
+    <div class="reveal">
+      <div class="cat-head"><span>Data Science &amp; ML</span><div class="cat-line"></div></div>
+      <div class="proj-grid">
+        <div class="p-card">
+          <div class="p-top"><div class="p-title">Predictive Analytics: EDA &amp; Machine Learning</div><div class="p-role">MSc</div></div>
+          <div class="p-tags"><span class="p-tag">Python</span><span class="p-tag">pandas</span><span class="p-tag">scikit-learn</span><span class="p-tag">matplotlib</span></div>
+          <div class="p-desc">End-to-end EDA: combining sources, cleaning outliers, engineering features, building predictive models. Documented every step with rationale and visual outputs.</div>
+          <a class="p-link" href="https://www.linkedin.com/in/sakshamtanwar/overlay/Project/1709663657/treasury/?profileId=ACoAADrUeZsBC6t9EgcUpe1FIUF1E00AmPKSoSQ" target="_blank" rel="noopener">View Report <span class="arrow">&rarr;</span></a>
+        </div>
+        <div class="p-card">
+          <div class="p-top"><div class="p-title">Sentiment Analysis — Alexa Reviews</div><div class="p-role">Verzeo</div></div>
+          <div class="p-tags"><span class="p-tag">Python</span><span class="p-tag">scikit-learn</span><span class="p-tag">NLP</span></div>
+          <div class="p-desc">Binary sentiment classification on Amazon Alexa feedback. Text preprocessing, feature engineering, and model optimisation.</div>
+          <a class="p-link" href="https://drive.google.com/file/d/1FQYAJuy466Vh2XVvNW36mhLRTORq1StG/view?usp=sharing" target="_blank" rel="noopener">View Report <span class="arrow">&rarr;</span></a>
+        </div>
+        <div class="p-card">
+          <div class="p-top"><div class="p-title">Price Range Detection — Mobile Devices</div><div class="p-role">Verzeo</div></div>
+          <div class="p-tags"><span class="p-tag">Python</span><span class="p-tag">ML</span><span class="p-tag">EDA</span></div>
+          <div class="p-desc">Classification model predicting mobile price ranges from hardware specs using EDA, cleaning, and multiple ML algorithms.</div>
+          <a class="p-link" href="https://drive.google.com/file/d/1_TUXPZ-_C0uM708APD92POb_79XpRpMT/view?usp=sharing" target="_blank" rel="noopener">View Report <span class="arrow">&rarr;</span></a>
+        </div>
+      </div>
+    </div>
+    <div class="reveal">
+      <div class="cat-head"><span>Operations &amp; Supply Chain</span><div class="cat-line"></div></div>
+      <div class="proj-grid">
+        <div class="p-card">
+          <div class="p-top"><div class="p-title">Sustainable Supply Chain Optimization — GreenGlow</div><div class="p-role">MSc</div></div>
+          <div class="p-tags"><span class="p-tag">Python (PuLP)</span><span class="p-tag">Excel</span><span class="p-tag">Tableau</span></div>
+          <div class="p-desc">MILP model optimising global supply chain across procurement, production, and transport. Balanced cost, emissions, and delivery. Scenario simulations visualised via heatmaps.</div>
+          <a class="p-link" href="https://www.linkedin.com/in/sakshamtanwar/overlay/Project/165181535/treasury/?profileId=ACoAADrUeZsBC6t9EgcUpe1FIUF1E00AmPKSoSQ" target="_blank" rel="noopener">View Report <span class="arrow">&rarr;</span></a>
+        </div>
+      </div>
+    </div>
+    <div class="reveal">
+      <div class="cat-head"><span>Statistical Modelling</span><div class="cat-line"></div></div>
+      <div class="proj-grid">
+        <div class="p-card">
+          <div class="p-top"><div class="p-title">Exchange Rate Forecasting — CAD/AUD</div><div class="p-role">MSc</div></div>
+          <div class="p-tags"><span class="p-tag">Python</span><span class="p-tag">ARIMA</span><span class="p-tag">Time Series</span></div>
+          <div class="p-desc">10 years of quarterly data. ADF stationarity tests, Box-Jenkins AR/MA/ARMA/ARIMA models. Found inflation alone is insufficient — macro variables needed.</div>
+          <a class="p-link" href="https://www.linkedin.com/in/sakshamtanwar/overlay/Project/164299866/treasury/?profileId=ACoAADrUeZsBC6t9EgcUpe1FIUF1E00AmPKSoSQ" target="_blank" rel="noopener">View Report <span class="arrow">&rarr;</span></a>
+        </div>
+      </div>
+    </div>
+    <div class="reveal">
+      <div class="cat-head"><span>Data Visualization</span><div class="cat-line"></div></div>
+      <div class="proj-grid">
+        <div class="p-card">
+          <div class="p-top"><div class="p-title">Zomato Restaurant Trends — Pan-India</div><div class="p-role">BSc</div></div>
+          <div class="p-tags"><span class="p-tag">Tableau</span><span class="p-tag">pandas</span><span class="p-tag">Python</span></div>
+          <div class="p-desc">Pan-India Zomato analysis: popular cuisines, top chains, optimal locations. Tableau visualisations for restaurant strategy using ratings and geospatial data.</div>
+          <a class="p-link" href="https://public.tableau.com/app/profile/abeer.zainab.naqvi/viz/TRENDS_16641731326620/DIVERSIFICATIONOFCUISINES" target="_blank" rel="noopener">View Dashboard <span class="arrow">&rarr;</span></a>
+        </div>
+        <div class="p-card">
+          <div class="p-top"><div class="p-title">Pollution Prediction Model</div><div class="p-role">BSc</div></div>
+          <div class="p-tags"><span class="p-tag">Python</span><span class="p-tag">ML</span><span class="p-tag">Analytics</span></div>
+          <div class="p-desc">ML models predicting and classifying air quality levels, identifying pollution patterns from real-world environmental datasets.</div>
+          <a class="p-link" href="https://drive.google.com/file/d/1FQYAJuy466Vh2XVvNW36mhLRTORq1StG/view?usp=sharing" target="_blank" rel="noopener">View Report <span class="arrow">&rarr;</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="s-divider"></div>
+
+<section id="skills">
+  <div class="s-header reveal"><div class="s-num">04</div><h2>Skills &amp; Tools</h2></div>
+  <div class="skills-grid">
+    <div class="sk-group reveal">
+      <div class="sk-title">Technical</div>
+      <div class="sk-tags">
+        <span class="sk-tag">Power BI</span><span class="sk-tag">DAX</span><span class="sk-tag">Power Query</span>
+        <span class="sk-tag">SQL (T-SQL)</span><span class="sk-tag">Python</span><span class="sk-tag">pandas</span>
+        <span class="sk-tag">scikit-learn</span><span class="sk-tag">Tableau</span><span class="sk-tag">Excel (Advanced)</span>
+        <span class="sk-tag">Snowflake</span><span class="sk-tag">Jupyter</span>
+      </div>
+    </div>
+    <div class="sk-group reveal reveal-delay-1">
+      <div class="sk-title">Domain</div>
+      <div class="sk-tags">
+        <span class="sk-tag">Business Analysis</span><span class="sk-tag">BI &amp; Reporting</span>
+        <span class="sk-tag">Requirements Gathering</span><span class="sk-tag">KPI Design</span>
+        <span class="sk-tag">Supply Chain Analytics</span><span class="sk-tag">Predictive Modelling</span>
+        <span class="sk-tag">Data Storytelling</span><span class="sk-tag">Stakeholder Communication</span>
+        <span class="sk-tag">Agile / Scrum</span><span class="sk-tag">Process Mapping</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="s-divider"></div>
+
+<section id="education">
+  <div class="s-header reveal"><div class="s-num">05</div><h2>Education</h2></div>
+  <div class="edu-row">
+    <div class="edu-card reveal">
+      <div class="edu-badge">Business Merit Scholarship</div>
+      <div class="edu-deg">MSc Business Analytics</div>
+      <div class="edu-school">University College Cork</div>
+      <div class="edu-dates">2024 – 2025 · Cork, Ireland</div>
+      <div class="edu-desc">Advanced analytical techniques, predictive modelling, data mining, and strategic business intelligence. Key areas: Power BI, Python, SQL, Data Visualization.</div>
+    </div>
+    <div class="edu-card reveal reveal-delay-1">
+      <div class="edu-deg">BSc Data Analytics</div>
+      <div class="edu-school">Delhi Skill &amp; Entrepreneurship University</div>
+      <div class="edu-dates">2021 – 2024 · New Delhi, India</div>
+      <div class="edu-desc">Foundation in data modelling, database architecture, warehousing, and visualisation. Key tools: SQL, Excel, Tableau, Power BI, Python.</div>
+    </div>
+    <div class="edu-card reveal reveal-delay-2">
+      <div class="edu-deg">BA (Hons.) Psychology (Distance Learning)</div>
+      <div class="edu-school">IGNOU</div>
+      <div class="edu-dates">2023 – 2027</div>
+      <div class="edu-desc">Exploring cognitive, behavioural, and emotional analytics to complement technical data skills. Valuable for stakeholder engagement. Pursuing remotely alongside full-time professional work.</div>
+    </div>
+  </div>
+
+  <div style="margin-top:48px">
+    <div class="s-header reveal"><div class="s-num" style="font-size:11px">✦</div><h2>Certifications</h2></div>
+    <div class="certs-grid">
+      <div class="cert-card reveal">
+        <div class="cert-name">Business Analysis &amp; Process Management</div>
+        <div class="cert-issuer">Coursera</div>
+        <div class="cert-date">Aug 2024</div>
+      </div>
+      <div class="cert-card reveal reveal-delay-1">
+        <div class="cert-name">PL-300 Exam Preparation: Microsoft Power BI Data Analyst</div>
+        <div class="cert-issuer">Udemy</div>
+        <div class="cert-date">Feb 2023</div>
+      </div>
+      <div class="cert-card reveal reveal-delay-2">
+        <div class="cert-name">IELTS — International English Language Testing System</div>
+        <div class="cert-issuer">IELTS Official</div>
+        <div class="cert-date">Mar 2024</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="s-divider"></div>
+
+<section id="contact">
+  <div class="s-header reveal"><div class="s-num">06</div><h2>Get in Touch</h2></div>
+  <div class="contact-grid">
+    <div class="contact-prose reveal">
+      <p>I'm actively looking for <strong>Business Analyst, Data Analyst, BI Developer,</strong> and <strong>Operations Analyst</strong> roles across Ireland.</p>
+      <p>I have <strong>full work rights</strong> (Stamp 1G) and I'm available immediately. If you're hiring or know someone who is — I'd love to hear from you.</p>
+    </div>
+    <div class="contact-cards">
+      <a class="c-link reveal" href="mailto:saksham.tafs@gmail.com">
+        <div class="c-icon">&#9993;</div>
+        <div><div class="c-label">Email</div><div class="c-value">saksham.tafs@gmail.com</div></div>
+      </a>
+      <a class="c-link reveal reveal-delay-1" href="tel:+353899510913">
+        <div class="c-icon">&#9742;</div>
+        <div><div class="c-label">Phone</div><div class="c-value">+353 899 510 913</div></div>
+      </a>
+      <a class="c-link reveal reveal-delay-2" href="https://www.linkedin.com/in/sakshamtanwar" target="_blank" rel="noopener">
+        <div class="c-icon">in</div>
+        <div><div class="c-label">LinkedIn</div><div class="c-value">linkedin.com/in/sakshamtanwar</div></div>
+      </a>
+      <a class="c-link reveal reveal-delay-3" href="https://github.com/sammy077777" target="_blank" rel="noopener">
+        <div class="c-icon">&lt;/&gt;</div>
+        <div><div class="c-label">GitHub</div><div class="c-value">github.com/sammy077777</div></div>
+      </a>
+      <a class="c-link reveal reveal-delay-4" href="https://7c161a78-b1d9-4eae-a061-8c3fa863e043.filesusr.com/ugd/ab9672_1d5a19660aff43e28666f1797fd4de03.pdf" target="_blank" rel="noopener">
+        <div class="c-icon">&darr;</div>
+        <div><div class="c-label">Resume</div><div class="c-value">Download CV (PDF)</div></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p class="footer-tagline">Data is everywhere. You just have to look.</p>
+  <p class="copy">&copy; 2026 Saksham Tanwar. All rights reserved.</p>
+</footer>
+
+<button class="scroll-top" id="scrollTop">&uarr;</button>
+
+<script data-cfasync="false">
+document.addEventListener('DOMContentLoaded', function() {
+  document.documentElement.classList.add('js-loaded');
+
+  // CURSOR GLOW
+  var glow = document.getElementById('cursorGlow');
+  var mx = -500, my = -500, gx = -500, gy = -500;
+  document.addEventListener('mousemove', function(e) { mx = e.clientX; my = e.clientY; });
+  function animGlow() {
+    gx += (mx - gx) * 0.08;
+    gy += (my - gy) * 0.08;
+    glow.style.left = gx + 'px';
+    glow.style.top = gy + 'px';
+    requestAnimationFrame(animGlow);
+  }
+  animGlow();
+
+  // NAV SCROLL
+  var navEl = document.getElementById('nav');
+  window.addEventListener('scroll', function() {
+    if (window.scrollY > 50) { navEl.classList.add('scrolled'); } else { navEl.classList.remove('scrolled'); }
+  });
+
+  // HAMBURGER
+  var hb = document.getElementById('hamburger');
+  var mm = document.getElementById('mobileMenu');
+  var mo = document.getElementById('mobileOverlay');
+  function toggleMobile() {
+    hb.classList.toggle('active');
+    mm.classList.toggle('open');
+    mo.classList.toggle('visible');
+    document.body.style.overflow = mm.classList.contains('open') ? 'hidden' : '';
+  }
+  hb.addEventListener('click', toggleMobile);
+  mo.addEventListener('click', toggleMobile);
+  var mmLinks = mm.querySelectorAll('a');
+  for (var i = 0; i < mmLinks.length; i++) { mmLinks[i].addEventListener('click', toggleMobile); }
+
+  // SCROLL REVEAL
+  var revEls = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    var rObs = new IntersectionObserver(function(entries) {
+      for (var j = 0; j < entries.length; j++) {
+        if (entries[j].isIntersecting) {
+          entries[j].target.classList.add('visible');
+          rObs.unobserve(entries[j].target);
+        }
+      }
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    for (var k = 0; k < revEls.length; k++) { rObs.observe(revEls[k]); }
+  } else {
+    for (var l = 0; l < revEls.length; l++) { revEls[l].classList.add('visible'); }
+  }
+
+  // SCROLL TO TOP
+  var stb = document.getElementById('scrollTop');
+  window.addEventListener('scroll', function() {
+    if (window.scrollY > 600) { stb.classList.add('visible'); } else { stb.classList.remove('visible'); }
+  });
+  stb.addEventListener('click', function() { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+
+  // SMOOTH NAV SCROLL
+  var anchors = document.querySelectorAll('a[href^="#"]');
+  for (var m = 0; m < anchors.length; m++) {
+    anchors[m].addEventListener('click', function(e) {
+      var href = this.getAttribute('href');
+      var target = document.querySelector(href);
+      if (target) {
+        e.preventDefault();
+        var y = target.getBoundingClientRect().top + window.scrollY - 80;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      }
+    });
+  }
+
+  // ACTIVE NAV LINK
+  var secs = document.querySelectorAll('section[id]');
+  var navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', function() {
+    var current = '';
+    for (var n = 0; n < secs.length; n++) {
+      if (window.scrollY >= secs[n].offsetTop - 120) { current = secs[n].getAttribute('id'); }
+    }
+    for (var o = 0; o < navLinks.length; o++) {
+      navLinks[o].style.color = navLinks[o].getAttribute('href') === '#' + current ? 'var(--accent)' : '';
+    }
+  });
+
+  // TILT ON PROJECT CARDS
+  var pCards = document.querySelectorAll('.p-card');
+  for (var p = 0; p < pCards.length; p++) {
+    (function(card) {
+      card.addEventListener('mousemove', function(e) {
+        var r = card.getBoundingClientRect();
+        var x = e.clientX - r.left;
+        var y = e.clientY - r.top;
+        var cx = r.width / 2;
+        var cy = r.height / 2;
+        var rotX = (y - cy) / cy * -3;
+        var rotY = (x - cx) / cx * 3;
+        card.style.transform = 'translateY(-4px) perspective(800px) rotateX(' + rotX + 'deg) rotateY(' + rotY + 'deg)';
+      });
+      card.addEventListener('mouseleave', function() { card.style.transform = ''; });
+    })(pCards[p]);
+  }
+
+  // MAGNETIC BUTTONS
+  var btns = document.querySelectorAll('.btn');
+  for (var q = 0; q < btns.length; q++) {
+    (function(btn) {
+      btn.addEventListener('mousemove', function(e) {
+        var r = btn.getBoundingClientRect();
+        var dx = (e.clientX - r.left - r.width / 2) * 0.15;
+        var dy = (e.clientY - r.top - r.height / 2) * 0.15;
+        btn.style.transform = 'translate(' + dx + 'px,' + dy + 'px)';
+      });
+      btn.addEventListener('mouseleave', function() { btn.style.transform = ''; });
+    })(btns[q]);
+  }
+});
+</script>
